@@ -1,55 +1,32 @@
 import React, { Component } from 'react';
+import { getState, addListen } from './store';
+import { action } from './actions';
+import { setName, setHeight, setWeight, setSex, addPerson, removePerson } from './store';
+import { clearPerson, clearAll } from './store';
 
 class App extends Component {
   constructor() {
     super();
 
-    this.state = {
-      name: '',
-      height: '',
-      weight: '',
-      sex: 'M',
-      id: 0,
-      person: []
-    };
-
-    this.changeSex = this.changeSex.bind(this);
-    this.changeName = this.changeName.bind(this);
-    this.changeHeight = this.changeHeight.bind(this);
-    this.changeWeight = this.changeWeight.bind(this);
-    this.addPerson = this.addPerson.bind(this);
+    this.state = getState();
   }
 
-  changeName(e) {
-    this.setState({ name: e.target.value })
+  componentDidMount() {
+    addListen(this._update);
+    console.log(action);
+    console.log(action.set);
+    console.log(action.set.WEIGHT);
   }
 
-  changeHeight(e) {
-    this.setState({ height: e.target.value })
-  }
+  _update = () => this.setState(getState());
 
-  changeWeight(e) {
-    this.setState({ weight: e.target.value })
-  }
+  changeName = (e) => setName(e.target.value);
 
-  changeSex(e) {
-    this.setState({ sex: e.target.dataset.sex });
-  }
+  changeHeight = (e) => setHeight(e.target.value);
 
-  addPerson() {
-    this.setState({ id: this.state.id + 1 }, () => {
-      const { name, height, weight, sex, id } = this.state;
-      const obj = { name, height, weight, sex, id };
-      const newPerson = [...this.state.person, obj];
-      this.setState({ person: newPerson });
-    });
-  }
+  changeWeight = (e) => setWeight(e.target.value);
 
-  removePerson(id) {
-    console.log('remove', id);
-    const newPerson = this.state.person.filter(item => item.id !== id);
-    this.setState({person: newPerson});
-  }
+  changeSex = (e) => setSex(e.target.dataset.sex);
 
   render() {
     return (
@@ -83,7 +60,9 @@ class App extends Component {
             /> - Ж
           </div>
           <div>
-            <button onClick={this.addPerson}>Add Person</button>
+            <button onClick={addPerson}>Add Person</button>
+            <button onClick={clearPerson}>Reset Person</button>
+            <button onClick={clearAll}>Clear All</button>
           </div>
           <div>
             {this.state.person.map(
@@ -94,7 +73,7 @@ class App extends Component {
                   {item.name} |
                   {item.height} |
                   {item.weight} |
-                  <button onClick={() => this.removePerson(item.id)}>remove</button>
+                  <button onClick={() => removePerson(item.id)}>remove</button>
                 </div>
               )
             )}
