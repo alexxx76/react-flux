@@ -9,61 +9,72 @@ const state = {
   weight: '',
   sex: 'M',
   id: 0,
-  person: []
+  persons: []
 };
 
 export const getState = () => state;
 
-export const addListen = (fn) => listeners.push(fn);
+export const getName = () => state.name;
+
+export const getHeight = () => state.height;
+
+export const getWeight = () => state.weight;
+
+export const getSex = () => state.sex;
+
+export const getPersons = () => state.persons;
+
+export const addListen = fn => listeners.push(fn);
 
 const notify = () => listeners.forEach(fn => fn());
 
-export const setName = (value) => {
-  state.name = value;
+listen(action.set.NAME, name => {
+  state.name = name;
   notify();
-}
+});
 
-export const setHeight = (value) => {
-  state.height = value;
+listen(action.set.HEIGHT, height => {
+  state.height = height;
   notify();
-}
+});
 
-export const setWeight = (value) => {
-  state.weight = value;
+listen(action.set.WEIGHT, weight => {
+  state.weight = weight;
   notify();
-}
+});
 
-export const setSex = (value) => {
-  state.sex = value;
+listen(action.set.SEX, sex => {
+  state.sex = sex;
   notify();
-}
+});
 
-export const addPerson = () => {
+listen(action.person.ADD, () => {
   state.id = state.id + 1;
   const { name, height, weight, sex, id } = state;
   const obj = { name, height, weight, sex, id };
-  state.person = [...state.person, obj];
+  state.persons = [...state.persons, obj];
   notify();
-}
+});
 
-export const removePerson = (id) => {
-  state.person = state.person.filter(item => item.id !== id);
+listen(action.person.REMOVE, id => {
+  state.persons = state.persons.filter(item => item.id !== id);
   notify();
-}
+});
 
-export const clearPerson = () => {
+const resetPersonState = () => {
   state.name = '';
   state.height = '';
   state.weight = '';
   state.sex = 'M';
-  notify();
-}
+};
 
-export const clearAll = () => {
-  state.name = '';
-  state.height = '';
-  state.weight = '';
-  state.sex = 'M';
-  state.person = [];
+listen(action.clear.PERSON, () => {
+  resetPersonState();
   notify();
-}
+});
+
+listen(action.clear.ALL, () => {
+  resetPersonState();
+  state.persons = [];
+  notify();
+});

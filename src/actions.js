@@ -1,4 +1,7 @@
 export const action = {
+  get: {
+    STATE: 'GET:STATE'
+  },
   set: {
     NAME: 'SET:NAME',
     HEIGHT: 'SET:HEIGHT',

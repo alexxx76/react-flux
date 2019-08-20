@@ -6,7 +6,6 @@ export const listen = (action, fn) => {
 };
 
 export const emit = (action, ...data) => {
-  console.log('emit', action, ...data);
   const fns = listeners[action];
   if (fns) fns.forEach(fn => fn(...data));
 }

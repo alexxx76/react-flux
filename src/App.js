@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { getState, addListen } from './store';
+import { emit } from './dispatcher';
 import { action } from './actions';
-import { setName, setHeight, setWeight, setSex, addPerson, removePerson } from './store';
-import { clearPerson, clearAll } from './store';
 
 class App extends Component {
   constructor() {
@@ -13,20 +12,25 @@ class App extends Component {
 
   componentDidMount() {
     addListen(this._update);
-    console.log(action);
-    console.log(action.set);
-    console.log(action.set.WEIGHT);
   }
 
   _update = () => this.setState(getState());
 
-  changeName = (e) => setName(e.target.value);
+  changeName = e => emit(action.set.NAME, e.target.value);
 
-  changeHeight = (e) => setHeight(e.target.value);
+  changeHeight = e => emit(action.set.HEIGHT, e.target.value);
 
-  changeWeight = (e) => setWeight(e.target.value);
+  changeWeight = e => emit(action.set.WEIGHT, e.target.value);
 
-  changeSex = (e) => setSex(e.target.dataset.sex);
+  changeSex = e => emit(action.set.SEX, e.target.dataset.sex);
+
+  addPerson = () => emit(action.person.ADD);
+
+  removePerson = id => emit(action.person.REMOVE, id);
+
+  clearPerson = () => emit(action.clear.PERSON);
+
+  clearAll = () => emit(action.clear.ALL);
 
   render() {
     return (
@@ -60,12 +64,12 @@ class App extends Component {
             /> - Ж
           </div>
           <div>
-            <button onClick={addPerson}>Add Person</button>
-            <button onClick={clearPerson}>Reset Person</button>
-            <button onClick={clearAll}>Clear All</button>
+            <button onClick={this.addPerson}>Add Person</button>
+            <button onClick={this.clearPerson}>Reset Person</button>
+            <button onClick={this.clearAll}>Clear All</button>
           </div>
           <div>
-            {this.state.person.map(
+            {this.state.persons.map(
               item => (
                 <div key={item.id}>
                   {item.id} |
@@ -73,7 +77,7 @@ class App extends Component {
                   {item.name} |
                   {item.height} |
                   {item.weight} |
-                  <button onClick={() => removePerson(item.id)}>remove</button>
+                  <button onClick={() => this.removePerson(item.id)}>remove</button>
                 </div>
               )
             )}
