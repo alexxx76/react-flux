@@ -10,7 +10,7 @@ const changeHeight = e => emit(action.set.HEIGHT, e.target.value);
 const InputHeight = () => {
   return (
     <div className={styles.box}>
-      <div className={styles.header}>height</div>
+      <div className={styles.header}>height (cm)</div>
       <input
         className={styles.input}
         type="text"
