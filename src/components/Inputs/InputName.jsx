@@ -10,7 +10,7 @@ const changeName = e => emit(action.set.NAME, e.target.value);
 const InputName = () => {
   return (
     <div className={styles.box}>
-      <div className={styles.header}>name</div>
+      <div className={styles.header}>name (word)</div>
       <input
         className={styles.input}
         type="text"
