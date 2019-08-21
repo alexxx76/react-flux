@@ -10,7 +10,7 @@ const changeWeight = e => emit(action.set.WEIGHT, e.target.value);
 const InputWeight = () => {
   return (
     <div className={styles.box}>
-      <div className={styles.header}>weight</div>
+      <div className={styles.header}>weight (kg)</div>
       <input
         className={styles.input}
         type="text"
