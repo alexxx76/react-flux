@@ -1,0 +1,16 @@
+.box {
+  width: 33.3%;
+  float: left;
+  height: 60px;
+}
+
+.header {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.input {
+  width: 90%;
+  height: 20px;
+  margin-left: 5%;
+}

@@ -1,0 +1,10 @@
+.box {
+  height: 40px;
+}
+
+.container {
+  margin: 0 33%;
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-around;
+}

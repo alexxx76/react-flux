@@ -1,0 +1,11 @@
+.box {
+  height: 50px;
+  padding-left: .3%;
+  display: flex;
+  justify-content: center;
+}
+
+.button {
+  width: 32.4%;
+  height: 100%;
+}

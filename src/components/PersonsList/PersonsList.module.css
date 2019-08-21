@@ -1,0 +1,21 @@
+.box {
+  width: 96%;
+  margin-left: 2%;
+  height: 320px;
+  margin-top: 20px;
+  background: #576897;
+  overflow-y: auto;
+}
+
+.row {
+  background: #43568b;
+  margin: 5px 0;
+}
+
+.button {
+  margin-right: 10px;
+}
+
+.item {
+  margin: 10px;
+}

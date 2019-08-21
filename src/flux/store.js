@@ -29,18 +29,31 @@ export const addListen = fn => listeners.push(fn);
 const notify = () => listeners.forEach(fn => fn());
 
 listen(action.set.NAME, name => {
-  state.name = name;
-  notify();
+  let result = name.match(/([A-Z]|[a-z]|[А-Я]|[а-я])*/);
+  if (result) {
+    state.name = result[0];
+    notify();
+  }
 });
 
+const trimLeftNil = (string) => {
+  return string.replace(/^[0]*/, '');
+};
+
 listen(action.set.HEIGHT, height => {
-  state.height = height;
-  notify();
+  let result = height.match(/([0-9])*/);
+  if (result && +result[0] >= 0 && +result[0] <= 250) {
+    state.height = trimLeftNil(result[0]);
+    notify();
+  }
 });
 
 listen(action.set.WEIGHT, weight => {
-  state.weight = weight;
-  notify();
+  let result = weight.match(/([0-9])*/);
+  if (result && +result[0] >= 0 && +result[0] <= 400) {
+    state.weight = trimLeftNil(result[0]);
+    notify();
+  }
 });
 
 listen(action.set.SEX, sex => {
@@ -49,6 +62,7 @@ listen(action.set.SEX, sex => {
 });
 
 listen(action.person.ADD, () => {
+  if (state.name === '') return;
   state.id = state.id + 1;
   const { name, height, weight, sex, id } = state;
   const obj = { name, height, weight, sex, id };
@@ -76,5 +90,6 @@ listen(action.clear.PERSON, () => {
 listen(action.clear.ALL, () => {
   resetPersonState();
   state.persons = [];
+  state.id = 0;
   notify();
 });
